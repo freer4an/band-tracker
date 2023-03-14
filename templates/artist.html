@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <title>{{.Artist.Name}}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav_left">
+                <h1>Groupie-Tracker</h1>
+            </div>
+            <div class="nav_right">
+                <div class="nav_btn"><a href="/">Home</a></div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="artist-container">
+            <div class="artist-top">
+                <img src="{{.Artist.Image}}" alt="artist.jpg">
+                <div class="artist-general-info">
+                    <h2>{{.Artist.Name}}</h2>
+                    <p>Date of creation: {{.Artist.CreationDate}}</p>
+                    <p>First album: {{.Artist.FirstAlbum}}</p>   
+                </div>
+            </div>
+            <hr>
+            <div class="artist-bottom">
+                <div class="artist-members">
+                    <h3>Group members</h3>
+                    <br>
+                    <ul>
+                        {{range .Artist.Members}}
+                        <li>
+                        {{.}}
+                        <br>
+                        </li>
+                        {{end}}
+                    </ul> 
+                </div>
+                <div class="artist-concerts">
+                    <h3>Concert history</h3>
+                    <br>
+                    <ul>
+                        {{range $key, $value := .Relations.DatesLocations}}
+                        <li>
+                            <h4>{{ $key }}</h4>
+                            {{range .}}
+                                {{.}}
+                                <br>
+                            {{end}}
+                        </li>
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

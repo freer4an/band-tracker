@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <script src="/static/js/script.js"></script>
+    <title>Groupie-Tracker</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav_left">
+                <h1>Groupie-Tracker</h1>
+            </div>
+            <div class="nav_center">
+                <div class="search-holder">
+                    <form class="search-bar" name="search-bar" method="GET" action="/">
+                        <input type="text" list="search-list" id="search-input" name="search" placeholder="Search...">
+                        <datalist id="search-list">
+                        {{range .}}
+                            <option value="{{.Artist.Name}} - {{.Artist.CreationDate}}"><a href="/artist/?id={{.Artist.ID}}"></a></option>
+                            {{range .Artist.Members}}
+                                <option value="{{.}} - member"></option>
+                            {{end}}   
+                            {{range $key, $value := .Relations.DatesLocations}}
+                                <option value="{{ $key }}"></option>
+                            {{end}}
+                            <option value="First album: {{.Artist.FirstAlbum}}"></option>
+                        {{end}}
+                        </datalist>
+                        <button type="submit"><img class="search-icon" src="/static/img/search_icon.png" alt="Search"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="nav_right">
+                <div class="nav_btn"><a href="/raw">Raw data</a></div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="all_artists">
+            {{range .}}
+            <div class="artist">
+                <div class="info_top">
+                    <a href="/artist/?id={{.Artist.ID}}">
+                        <img class="artist-img" src="{{.Artist.Image}}" alt="image not found">
+                    </a>
+                    <h2>{{.Artist.Name}}</h2>
+                    <p>Creation Date: {{.Artist.CreationDate}}</p>
+                    <p>First Album: {{.Artist.FirstAlbum}}</p>   
+                </div>
+                <div class="info_bottom">
+                    <p><a class="raw-btn" href="/raw/?id={{.Artist.ID}}">Raw</a></p>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+    <!-- <footer>
+        <div class="logo_alem">
+            <img src="/static/img/logo_alem.jpg" alt="">
+        </div>
+        <div class="contacts">
+            <h3><a href="https://01.alem.school/git/freeR">freer</a></h3>
+            <p>© 2023 Alem School.</p>
+        </div>
+    </footer> -->
+</body>
+</html>
